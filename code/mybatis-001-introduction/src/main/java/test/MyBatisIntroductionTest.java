@@ -19,13 +19,14 @@ public class MyBatisIntroductionTest {
         InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = ssfb.build(is);// 一般一个数据库一个
         //获取SqlSession对象
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+//        SqlSession sqlSession = sqlSessionFactory.openSession();//如果事务管理器是jdbc, 底层实际上会执行conn.setAutoCommit();
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
         //执行sql语句
         int affectRows = sqlSession.insert("insertCar");
 
         System.out.println("插入了" + affectRows + "条记录");
 
         //手动提交
-        sqlSession.commit();
+//        sqlSession.commit();//底层是conn.commit();
     }
 }

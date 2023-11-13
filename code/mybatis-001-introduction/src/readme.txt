@@ -68,3 +68,36 @@
         都不是固定的
         <mapper url="file:///d:/a.txt"/>    url属性: 从绝对路径中加载
         <mapper resource="com/CarMapper2.xml"/>    resource属性:从类的根路径下加载
+
+6. 研究mybatis事务管理机制的深度剖析
+    * 在mybatis-config.xml文件中, 可以通过以下的配置进行mybatis的事务管理
+         <transactionManager type="JDBC"/>
+    * type属性的值包括两个:
+        JDBC
+        MANAGED
+        不区分大小写
+    * 在mybatis中提供了两种事务管理机制
+        第一种: JDBC事务管理器
+        第二种: MANAGED事务管理器
+    * JDBC事务管理器
+        mybatis框架自己管理事务,自己采用原生的jdbc代码去管理事务
+
+        跟踪openSession()-->openSessionFromDataSource()
+            -->newTransaction()-->new JdbcTransaction()
+                -->跟踪autoCommit属性-->跟踪openConnection()-->setDesiredAutoCommit()
+
+        mybatis默认是开启了事务的,一般情况下需要你手动提交, 如果你需要自动提交(或者说不开启事务),写true
+            SqlSession sqlSession = sqlSessionFactory.openSession(true);
+            跟踪源码可知
+
+    * mybatis事务管理器
+        mybatis不再负责事务的管理,事务管理交给其他容器来负责.例如spring
+
+        对于现在只有jdbc的情况下, 如果你设置成managed, 那么相当于现在在关闭了事务是一样的效果
+
+    * JDBC中的事务:
+        如果没有在jdbc代码中执行conn.setAutoCommit(false);的话,默认是true即自动提交
+
+    *   重要:
+        setAutoCommit(true) -- 自动提交, 没有事务
+        setAutoCommit(false) -- 不自动提交, 开启事务
