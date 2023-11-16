@@ -2,12 +2,7 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
 <configuration>
-    <settings>
-        <!--        开启mybatis日志,logback框架-->
-        <setting name="logImpl" value="slf4j"/>
-    </settings>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -19,17 +14,10 @@
             </dataSource>
         </environment>
     </environments>
+    <!--    第二种资源加载-->
     <mappers>
         <!--        指定XxxMapper文件的路径-->
         <!--        resource属性会自动从类的根路径开始查找资源-->
-
-        <!--        从类路径下加载资源-->
-        <!--        <mapper resource="CarMapper.xml"/>-->
-
-        <!--        url属性,从绝对路径下加载资源-->
-        <!--        语法格式 file:///-->
-        <!--        <mapper url="file:///d:/a.txt"></mapper>-->
-        <mapper resource="com/CarMapper2.xml"/>
-
+        <mapper resource="CarMapper.xml"/>
     </mappers>
 </configuration>

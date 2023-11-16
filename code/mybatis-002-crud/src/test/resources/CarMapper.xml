@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesspace以后再讲-->
+<mapper namespace="org.mybatis.example.BlogMapper">
+    <!--    id是这条语句的唯一标识-->
+<!--    <insert id="insertCar">-->
+<!--        INSERT INTO t_car-->
+<!--        VALUES (null, #{k1}, #{k2}, #{k3}, #{k4}, #{k5});-->
+<!--    </insert>-->
+
+    <insert id="insertCar">
+        insert into t_car
+        values (null, #{xyz}, #{brand}, #{guide_price}, #{produce_time}, #{car_type});
+    </insert>
+
+    <delete id="deleteCarById">delete from t_car where id = #{id}</delete>
+</mapper>

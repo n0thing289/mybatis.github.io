@@ -29,7 +29,7 @@
         <!--        url属性,从绝对路径下加载资源-->
         <!--        语法格式 file:///-->
         <!--        <mapper url="file:///d:/a.txt"></mapper>-->
-        <mapper resource="com/CarMapper2.xml"/>
+        <mapper resource="CarMapper.xml"/>
 
     </mappers>
 </configuration>

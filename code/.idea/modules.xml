@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/junit-test/junit-test.iml" filepath="$PROJECT_DIR$/junit-test/junit-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatis-001-introduction/mybatis-001-introduction.iml" filepath="$PROJECT_DIR$/mybatis-001-introduction/mybatis-001-introduction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-002-crud/mybatis-002-crud.iml" filepath="$PROJECT_DIR$/mybatis-002-crud/mybatis-002-crud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" />
     </modules>
   </component>
 </project>
