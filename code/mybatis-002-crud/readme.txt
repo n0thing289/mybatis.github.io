@@ -74,3 +74,78 @@
     int affectRows = sqlSession.delete("deleteCarById", car);
 
     如果占位符只有一个, 那么#{}可以随便写,但最好还是见名知意,并且 调用delete方法传第二个参数的时候可以不需要传入一个对象
+
+4. update
+    * 需求:根据id修改某条记录
+
+    实现:
+        <update id="updateCarById">
+            update t_car
+            set brand=#{brand},
+                guide_price=#{guide_price},
+                produce_time=#{produce_time},
+                car_type=#{car_type}
+            where id = #{id};
+        </update>
+
+        Car car = new Car(3L, "10086", "五菱宏光", 100.00, "2023-11-16", "燃油车");
+        int count = sqlSession.update("updateCarById", car);
+
+5. select(需求:根据主键查询一个)
+    需求:根据id查询
+
+    实现
+
+        <select id="selectCarById">
+            select *
+            from t_car
+            where id = #{id};
+        </select>
+
+        Object car = sqlSession.selectOne("selectCarById", 3);
+
+
+        为什么现在你去执行会报错 It's likely that neither a Result Type nor a Result Map was specified.
+            //mybatis底层执行了select语句之后,一定会返回一个结果集对象:ResultSet
+            //JDBC中叫做ResultSet, 接下来就是mybatis应该从ResultSet中取出数据,封装Java对象
+            因为你现在查询完了,mybatis会取出数据封装,但是你并没有告诉mybatis,封装成什么对象, 所以报错了
+        怎么告诉mybatis要封装成什么对象?
+            //  select标签加一个属性
+            resultType="全限定类名(copy reference)"
+
+        为什么老杜的结果有些没有值有些有值?
+            因为老杜的pojo跟我的pojo中属性名不一样
+                我的严格与数据库的列名一致
+                老杜的没有下划线
+                mybatis去查询结果集的时候, 查询结果的列名和Car类的属性名对不上
+        怎么解决?
+            通过MySQL语句中的 as 关键字, 把查询结果的列名起别名(与Car类的属性名一致)
+            日后还可以再优化, 不用起别名的土方法
+
+6. select(查所有)
+
+    <select id="selectCarAll" resultType="pojo.Car">
+            select * from t_car;
+    </select>
+
+    List<Car> cars = sqlSession.selectList("selectCarAll");
+
+    注意：
+        告诉mybatis封装成什么对象， 还是在select标签中写属性： resultType="list集合中的数据类型(全限定类名)"
+
+
+7. 命名空间
+    情景:
+        如果我们新建了一个UserMapper.xml 里面的内容只包含一条selectAll语句
+        然后我们将其配置到mybatis-config.xml里面去
+        我们写一个testNamespace()方法在去测试selectCarAll语句
+        报错了
+        selectCarAll is ambiguous in Mapped Statements collection (try using the full name including the namespace, or rename one of the entries)
+
+    为什么会报错?
+        因为mybatis去mapper文件中去找sql语句的时候,找到了id都叫做selectCarAll的语句
+        mybatis不清楚你到底要用谁,就报错了
+
+    解决方法:
+        使用命名空间.sqlId传给方法是最规范的
+        也就是说命名空间是为了防止sqlId命名冲突而设置的

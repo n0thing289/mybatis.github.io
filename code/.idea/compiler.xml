@@ -11,12 +11,14 @@
         <module name="mybatis-001-introduction" />
         <module name="mybatis-002-crud" />
         <module name="review-mybatis-001-introduction" />
+        <module name="mybatis-003-configuration" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="junit-test" target="1.7" />
       <module name="mybatis-001-introduction" target="1.5" />
       <module name="mybatis-002-crud" target="1.8" />
+      <module name="mybatis-003-configuration" target="1.8" />
       <module name="review-mybatis" target="1.5" />
       <module name="review-mybatis-001-introduction" target="1.5" />
     </bytecodeTargetLevel>

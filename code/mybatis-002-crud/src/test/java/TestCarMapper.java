@@ -1,12 +1,68 @@
+import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import pojo.Car;
 import utils.SqlSessionUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestCarMapper {
+    @Test
+    public void testNamespace(){
+        //
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        //
+        List<Car> cars = sqlSession.selectList("selectCarAll");
+        cars.forEach(car -> System.out.println(car));
+        //
+        sqlSession.commit();
+        //
+        sqlSession.close();
+    }
+
+
+    @Test
+    public void testSelectCarAll(){
+        //
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        //
+        List<Car> cars = sqlSession.selectList("selectCarAll");
+        cars.forEach(car -> System.out.println(car));
+        //
+        sqlSession.commit();
+        //
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectCarById(){
+        //get SqlSession object
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        //执行SQL语句, 根据id查询,返回结果一定是一条
+        Object car = sqlSession.selectOne("selectCarById", 3);
+        System.out.println(car);
+        //
+        sqlSession.commit();
+        //
+        sqlSession.close();
+    }
+
+    @Test
+    public void testUpdateCarById() {
+        //
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        //执行
+        Car car = new Car(3L, "10086", "五菱宏光", 100.00, "2023-11-16", "燃油车");
+        int count = sqlSession.update("updateCarById", car);
+        System.out.println("修改行数:" + count);
+        //
+        sqlSession.commit();
+        //
+        sqlSession.close();
+
+    }
 
     @Test
     public void testDeleteCarById() {
