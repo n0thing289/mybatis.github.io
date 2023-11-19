@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesspace以后再讲-->
+<mapper namespace="AccountMapper">
+    <select id="selectByActno" resultType="bank.pojo.Account">
+        select id, actno,balance from t_act where actno=#{actno};
+    </select>
+
+    <update id="updateByActno">
+        update t_act set balance = #{balance} where actno=#{actno};
+    </update>
+</mapper>

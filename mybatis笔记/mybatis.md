@@ -159,3 +159,8 @@
 
   
 
+# 手写框架（听）
+
+- 解析xml文件
+  - （mybatis-config.xml CarMapper.xml）
+  - ![image-20231118100232557](./mybatisimgs/image-20231118100232557.png)![image-20231118100324751](./mybatisimgs/image-20231118100324751.png)

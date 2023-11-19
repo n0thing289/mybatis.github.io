@@ -14,7 +14,7 @@ public class TestCarMapper {
         //
         SqlSession sqlSession = SqlSessionUtil.openSession();
         //
-        List<Car> cars = sqlSession.selectList("selectCarAll");
+        List<Car> cars = sqlSession.selectList("UserMapper.selectCarAll");
         cars.forEach(car -> System.out.println(car));
         //
         sqlSession.commit();
@@ -28,7 +28,7 @@ public class TestCarMapper {
         //
         SqlSession sqlSession = SqlSessionUtil.openSession();
         //
-        List<Car> cars = sqlSession.selectList("selectCarAll");
+        List<Car> cars = sqlSession.selectList("CarMapper.selectCarAll");
         cars.forEach(car -> System.out.println(car));
         //
         sqlSession.commit();

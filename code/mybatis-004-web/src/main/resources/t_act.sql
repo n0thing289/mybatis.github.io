@@ -1,0 +1,8 @@
+CREATE TABLE t_act (
+	id BIGINT PRIMARY KEY,
+	actno VARCHAR(32),
+	balance DECIMAL(10,2));
+DROP TABLE t_act;
+INSERT INTO t_act VALUES(1,"act001", 50000.00);
+INSERT INTO t_act VALUES(2,"act002", 0);
+SELECT * FROM t_act;

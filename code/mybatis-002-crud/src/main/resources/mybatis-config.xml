@@ -30,6 +30,6 @@
         <!--        语法格式 file:///-->
         <!--        <mapper url="file:///d:/a.txt"></mapper>-->
         <mapper resource="CarMapper.xml"/>
-
+        <mapper resource="UserMapper.xml"/>
     </mappers>
 </configuration>
