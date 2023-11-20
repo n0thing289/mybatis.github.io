@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="junit-test" />
         <module name="mybatis-004-web" />
+        <module name="review-mybatis-002-crud" />
         <module name="review-mybatis-001-introduction" />
         <module name="review-mybatis" />
         <module name="mybatis-001-introduction" />
@@ -23,6 +24,7 @@
       <module name="mybatis-004-web" target="1.8" />
       <module name="review-mybatis" target="1.5" />
       <module name="review-mybatis-001-introduction" target="1.5" />
+      <module name="review-mybatis-002-crud" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

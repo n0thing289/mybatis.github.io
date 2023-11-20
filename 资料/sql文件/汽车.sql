@@ -12,8 +12,8 @@ CREATE TABLE t_car(
 --
 DROP TABLE t_car;
 --
-INSERT INTO t_car VALUES(1,100,"宝马520Li",41.00,"2023-11-12", "燃油车");
-INSERT INTO t_car VALUES(NULL, 101, "奔驰E300L",54.00,"2023-11-12","电车");
+INSERT INTO t_car VALUES(1,"100","宝马520Li",41.00,"2023-11-12", "燃油车");
+INSERT INTO t_car VALUES(NULL, "101", "奔驰E300L",54.00,"2023-11-12","电车");
 
 --
 SELECT * FROM t_car;
