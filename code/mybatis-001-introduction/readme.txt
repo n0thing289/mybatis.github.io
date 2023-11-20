@@ -104,7 +104,7 @@
             -->newTransaction()-->new JdbcTransaction()
                 -->跟踪autoCommit属性-->跟踪openConnection()-->setDesiredAutoCommit()
 
-        mybatis默认是开启了事务的, 一般情况下需要你手动提交, 如果你需要自动提交(或者说不开启事务),写true
+        注意：mybatis默认是开启了事务的, 一般情况下需要你手动提交, 如果你需要自动提交(或者说不开启事务),写true
             SqlSession sqlSession = sqlSessionFactory.openSession(true);
             跟踪源码可知
 

@@ -58,7 +58,7 @@
             可以在Car类中提供一个getXyz()方法,这样问题就解决了
         通过这个测试,得出一个结论:
             严格意义上来说: 如果使用pojo对象传递值的话,#{}中到底写什么?
-                写的是get方法的方法名去掉get,然后将剩下的首字母小写,最后得到的就是你要写的
+                写的是get方法的方法名去掉get,然后将剩下的首字母小写,最后得到的就是你要写的 （跟el表达式一样的相似）
                 例如: getUsername() --> #{username}
                 例如: getEmail() --> #{email}
                 ...
@@ -117,7 +117,7 @@
             因为老杜的pojo跟我的pojo中属性名不一样
                 我的严格与数据库的列名一致
                 老杜的没有下划线以及小驼峰命名法
-                mybatis去查询结果集的时候, 例如mybatis在一次传值: 然后会调用resultType指定的类 Car中的setCarType(),
+                mybatis去查询结果集的时候, 例如mybatis在一次传值: 然后会调用resultType指定的类 Car中的setCarType(), 来完成对对象的封装
                     那么mybatis会根据你的方法名, carType(参考el,以及mybatis传参原理)去跟结果集的列名中找名为carType的列
                     但是结果集列名叫car_type, 找不到carType的列, mybatis默认给null了
 

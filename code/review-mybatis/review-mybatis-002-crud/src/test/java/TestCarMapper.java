@@ -7,6 +7,8 @@ import pojo.Car;
 import utils.SqlSessionUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 在这个测试程序里面编写crud 相关的mybatis代码
@@ -66,5 +68,18 @@ public class TestCarMapper {
         sqlSession.commit();
         //
         SqlSessionUtil.close(sqlSession);
+    }
+
+    @Test
+    public void testSelectCarAll(){
+        //获取sqlSession对象
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        //
+        List<Car> cars = sqlSession.selectList("CarMapper.selectCarAll");
+        cars.forEach(car -> System.out.println(car));
+        //
+        sqlSession.commit();
+        //
+        sqlSession.close();
     }
 }
