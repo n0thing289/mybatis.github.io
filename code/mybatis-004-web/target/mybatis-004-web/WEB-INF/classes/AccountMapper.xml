@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namesspace以后再讲-->
-<mapper namespace="AccountMapper">
+<mapper namespace="bank.dao.AccountDao">
     <select id="selectByActno" resultType="bank.pojo.Account">
         select id, actno,balance from t_act where actno=#{actno};
     </select>

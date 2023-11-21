@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="junit-test" />
+        <module name="javaassist-test" />
         <module name="mybatis-004-web" />
         <module name="review-mybatis-002-crud" />
         <module name="review-mybatis-001-introduction" />
@@ -17,6 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="javaassist-test" target="8" />
       <module name="junit-test" target="1.7" />
       <module name="mybatis-001-introduction" target="1.5" />
       <module name="mybatis-002-crud" target="1.8" />

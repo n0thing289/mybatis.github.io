@@ -1,11 +1,11 @@
 package bank.service.impl;
 
 import bank.dao.AccountDao;
-import bank.dao.impl.AccountDaoImpl;
 import bank.exceptions.AppException;
 import bank.exceptions.NotEnoughMoneyException;
 import bank.pojo.Account;
 import bank.service.AccountService;
+import bank.utils.GenerateDaoProxy;
 import bank.utils.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -16,7 +16,8 @@ import java.io.IOException;
  */
 public class AccountServiceImpl implements AccountService {
 
-    private AccountDao accountDao = new AccountDaoImpl();
+    //    private AccountDao accountDao = new AccountDaoImpl();
+    private final AccountDao accountDao = (AccountDao) GenerateDaoProxy.generate(SqlSessionUtil.openSession(), AccountDao.class);
 
     /**
      * 完成转账业务
@@ -46,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 //        s.toString();
         count += accountDao.updateByActno(toAct);
         // 如果转账成功条数不对,抛出异常
-        if(count != 2){
+        if (count != 2) {
             throw new AppException("app转账异常!");
         }
         //能走到这里说明修改数据库都成功了,这时候才提交

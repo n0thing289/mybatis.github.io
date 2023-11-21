@@ -21,6 +21,9 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0"
          metadata-complete="true">
+    <!--metadata-complete="true" 表示只支持配置文件的信息， 注解会失效。
+        false 注解才会生效
+     -->
 
     <display-name>Welcome to Tomcat</display-name>
     <description>
