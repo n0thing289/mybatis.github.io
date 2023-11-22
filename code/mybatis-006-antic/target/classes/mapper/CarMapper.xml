@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesspace以后再讲-->
+<mapper namespace="mapper.CarMapper">
+
+    <select id="selectByBrandLike" resultType="pojo.Car">
+        select * from t_car where brand like '%${brand}%';
+    </select>
+
+    <delete id="deleteBatch">
+        delete from t_car where id in(${ids});
+    </delete>
+
+    <select id="selectAllAscOrDesc" resultType="pojo.Car">
+        select *
+        from t_car
+        order by produce_time ${produceTime};
+    </select>
+
+    <select id="selectByCarType" resultType="pojo.Car">
+        select *
+        from t_car
+        where car_type = ${carType};
+    </select>
+
+</mapper>

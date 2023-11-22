@@ -10,6 +10,6 @@ import java.io.IOException;
  * 只做crud
  */
 public interface AccountDao {
-    Account selectByActno(String Actno) throws IOException;
-    int updateByActno(Account act) throws IOException;
+    Account selectByActno(String Actno);
+    int updateByActno(Account act);
 }

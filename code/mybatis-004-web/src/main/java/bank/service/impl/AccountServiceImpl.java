@@ -17,7 +17,12 @@ import java.io.IOException;
 public class AccountServiceImpl implements AccountService {
 
     //    private AccountDao accountDao = new AccountDaoImpl();
-    private final AccountDao accountDao = (AccountDao) GenerateDaoProxy.generate(SqlSessionUtil.openSession(), AccountDao.class);
+//    private final AccountDao accountDao = (AccountDao) GenerateDaoProxy.generate(SqlSessionUtil.openSession(), AccountDao.class);
+    //好消息， 不需要我们去手写dao代理类，mybatis已经提供为我们动态生成dao接口的实现类
+    //mybatis当中实际上采用了代理模式，在内存中生成dao接口的代理类， 然后创建代理类的实例
+    //mybatis的这种代理机制的前提： SqlMapper.xml文件中namespace必须是dao接口的全限定名称, id必须是dao接口中的方法名
+    // 怎么写? SqlSession对象.getMapper(dao.class)
+    private final AccountDao accountDao = SqlSessionUtil.openSession().getMapper(AccountDao.class);
 
     /**
      * 完成转账业务

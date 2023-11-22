@@ -6,9 +6,9 @@
 
 
 
-package bank.dao.impl;
+package bank.mapper.impl;
 
-import bank.dao.AccountDao;
+import bank.mapper.AccountDao;
 import bank.pojo.Account;
 import bank.utils.SqlSessionUtil;
 import org.apache.ibatis.io.Resources;

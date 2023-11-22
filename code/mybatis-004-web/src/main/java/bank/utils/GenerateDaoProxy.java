@@ -70,7 +70,7 @@ public class GenerateDaoProxy {
                 }
                 if (sqlCommandType == SqlCommandType.SELECT) {
                     String returnType = method.getReturnType().getName();
-                    methodCode.append("return (" + returnType + ")sqlSession.selectOne(\"" + sqlId + "\", arg0);");
+                    methodCode.append("return (" + returnType + ") sqlSession.selectOne(\"" + sqlId + "\", arg0);");
                 }
                 methodCode.append("}");
                 //制造方法-2

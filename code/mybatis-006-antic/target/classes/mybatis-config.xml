@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="mysql.properties"/>
+    <typeAliases>
+
+        <typeAlias type="pojo.Car" alias="aaa"/>
+        <!--省略-->
+        <typeAlias type="pojo.Car"/>
+
+    </typeAliases>
+    <environments default="powernode">
+
+        <environment id="powernode">
+
+            <transactionManager type="JDBC"/>
+
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+    <mappers>
+<!--        <mapper resource="CarMapper.xml"/>-->
+<!--        <mapper resource="LogMapper.xml"/>-->
+
+        <mapper class="mapper.CarMapper"/>
+        <mapper class="mapper.LogMapper"/>
+    </mappers>
+</configuration>
