@@ -21,14 +21,16 @@
 4. 数据源datasource
     池的几个配置
 
-configuration
-    -- settings
-        -- setting
-    -- properties
-        -- property
-    -- environments
-        -- environment
-            -- transactionManager
-            -- datasource
-    -- mappers
-        -- mapper
+一个基本的mybatis核心配置文件
+    configuration 根标签
+        -- settings
+            -- setting
+        -- properties resource属性
+            -- property name属性 value属性
+        -- environments default属性
+            -- environment id属性
+                -- transactionManager type属性=JDBC|MANAGED
+                -- datasource type属性=POOLED|UNPOOLED|JNDI
+                    -- property name属性 value属性
+        -- mappers
+            -- mapper

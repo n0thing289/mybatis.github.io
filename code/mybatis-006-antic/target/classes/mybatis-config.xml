@@ -11,6 +11,8 @@
         <!--省略-->
         <typeAlias type="pojo.Car"/>
 
+        <package name="pojo"/>
+
     </typeAliases>
     <environments default="powernode">
 
@@ -29,10 +31,16 @@
     </environments>
 
     <mappers>
-<!--        <mapper resource="CarMapper.xml"/>-->
-<!--        <mapper resource="LogMapper.xml"/>-->
+        <!--        <mapper resource="CarMapper.xml"/>-->
+        <!--        <mapper resource="LogMapper.xml"/>-->
 
+        <!--使用这种方式的前提:CarMapper.xml文件的位置不能随便放
+            必须和CarMapper接口放在同一目录
+            并且xml名字与接口名一致-->
         <mapper class="mapper.CarMapper"/>
         <mapper class="mapper.LogMapper"/>
+        <!--这种方式在实际开发中是使用的
+        前提是: XML文件必须和接口放在一起.并且名字一致-->
+<!--        <package name="mapper"/>-->
     </mappers>
 </configuration>

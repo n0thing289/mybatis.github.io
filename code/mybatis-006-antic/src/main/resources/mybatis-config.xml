@@ -41,6 +41,6 @@
         <mapper class="mapper.LogMapper"/>
         <!--这种方式在实际开发中是使用的
         前提是: XML文件必须和接口放在一起.并且名字一致-->
-        <package name="mapper"/>
+<!--        <package name="mapper"/>-->
     </mappers>
 </configuration>

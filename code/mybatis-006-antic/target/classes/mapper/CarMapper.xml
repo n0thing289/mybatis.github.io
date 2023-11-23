@@ -5,6 +5,10 @@
 <!--namesspace以后再讲-->
 <mapper namespace="mapper.CarMapper">
 
+    <insert id="insertByUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id">
+        insert into t_car values(#{id}, #{car_num},#{brand},#{guide_price},#{produce_time},#{car_type});
+    </insert>
+
     <select id="selectByBrandLike" resultType="pojo.Car">
         select * from t_car where brand like '%${brand}%';
     </select>

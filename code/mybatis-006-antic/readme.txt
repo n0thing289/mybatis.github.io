@@ -86,10 +86,10 @@ ${}的执行结果
         url:这种方式是一种绝对路径的方式，这种方式不要求配置文件必须放到类路径当中，哪里都行，只要提供一个绝对路径就行。这种方式使用极少，因为移植性差
         cLass: 这个位置提供的是mapper接口的全限定接口名，必须带有包名的。
             思考: mapper标签的作用是指定SqLMapper.xml文件的路径，指定接口名有什么用呢?
-                <mapper class="com.powennode .mybatis.mapper.CarMapper"/>
-                如果你cTass指定是: com.powernode.mybatis.mapper.CarMapper
+                <mapper class="com.powennode.mybatis.mapper.CarMapper"/>
+                如果你class指定是: com.powernode.mybatis.mapper.CarMapper
                 那么mybatis框架会自动去com/powernode/mybatis/mapper目录下查找CarMapper.xml文件.
-            注意:也就是说:如果你采用这种方式，那么你必须保证CarMapper.xl文件和CarMapper接口必须在同一个目录下。并且名字一致。
+            注意:也就是说:如果你采用这种方式，那么你必须保证CarMapper.xml文件和CarMapper接口必须在同一个目录下。并且名字一致。
             CarMapper接口-> CarMapper.xml
             LogMapper接口-> LogMapper.xml
             ....
@@ -102,5 +102,5 @@ ${}的执行结果
     useGeneratedKeys="true" 使用自动生成的主键值
     keyProperty="id" 指定主键值赋值给对象的哪个属性.这个就表示将主键值赋值给Car对象的id属性
     <insert id="insertCarUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id">
-        ...
+        insert into t_car values(#{id}, #{car_num},#{brand},#{guide_price},#{produce_time},#{car_type});
     </insert>

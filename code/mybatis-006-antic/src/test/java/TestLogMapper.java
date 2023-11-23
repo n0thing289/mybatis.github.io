@@ -7,6 +7,9 @@ import utils.SqlSessionUtil;
 import java.util.List;
 
 public class TestLogMapper {
+    /**
+     * 测试#{}和${}的区别
+     */
     @Test
     public void testSelectAllByTable(){
         SqlSession sqlSession = SqlSessionUtil.openSession();
