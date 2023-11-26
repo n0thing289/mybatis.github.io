@@ -5,7 +5,7 @@
 
 <configuration>
 
-    <!--java.util.Properties类. 是一个Map集合. key和value都是字符串-->
+    <!--java.utils.Properties类. 是一个Map集合. key和value都是字符串-->
     <!--        <properties>-->
     <!--            &lt;!&ndash;这里去定义一些属性&ndash;&gt;-->
     <!--            &lt;!&ndash;用的时候 在value="${jdbc.driver}"&ndash;&gt;-->

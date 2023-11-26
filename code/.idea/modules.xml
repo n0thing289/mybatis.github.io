@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/mybatis-004-web/mybatis-004-web.iml" filepath="$PROJECT_DIR$/mybatis-004-web/mybatis-004-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatis-005-crud2/mybatis-005-crud2.iml" filepath="$PROJECT_DIR$/mybatis-005-crud2/mybatis-005-crud2.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatis-006-antic/mybatis-006-antic.iml" filepath="$PROJECT_DIR$/mybatis-006-antic/mybatis-006-antic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-007-param/mybatis-007-param.iml" filepath="$PROJECT_DIR$/mybatis-007-param/mybatis-007-param.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-008-select/mybatis-008-select.iml" filepath="$PROJECT_DIR$/mybatis-008-select/mybatis-008-select.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis-002-crud/review-mybatis-002-crud.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis-002-crud/review-mybatis-002-crud.iml" />

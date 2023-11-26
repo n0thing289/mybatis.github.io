@@ -93,11 +93,12 @@ ${}的执行结果
             CarMapper接口-> CarMapper.xml
             LogMapper接口-> LogMapper.xml
             ....
-    提醒!!!!!!!!!!!!!!!!!!!!!!!
-        在IDEA的resources目录下新建多重目录的话，必须是这样创建:
-        com/powernode/mybatis/mapper
-        不能这样:
-        com.powernode.mybatis.mapper
+    最终写法: <package name="包名"/> 前提是必须保证XxxMapper.xml文件和XxxMapper接口必须在同一个目录下。并且名字一致。
+        提醒!!!!!!!!!!!!!!!!!!!!!!!
+            在IDEA的resources目录下新建多重目录的话，必须是这样创建:
+            com/powernode/mybatis/mapper
+            不能这样:
+            com.powernode.mybatis.mapper
 7. 使用自动生成的主键值
     useGeneratedKeys="true" 使用自动生成的主键值
     keyProperty="id" 指定主键值赋值给对象的哪个属性.这个就表示将主键值赋值给Car对象的id属性

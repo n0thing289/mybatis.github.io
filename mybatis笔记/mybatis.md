@@ -52,6 +52,14 @@
 
 # 使用mybatis完成CRUD
 
+- javaweb mvc那部分完成crud的代码
+  - insert(Account act)
+  - delete(Long id)
+  - updete(Account act)  传入是一个对象
+  - selectById(Long id)
+  - selectAll()
+- 使用mybatis完成crud的时候也是同上
+
 
 
 # mybatis的configuration
@@ -69,6 +77,9 @@
 - 在web项目使用mybatis的不足之一： dao的源码其实很固定，我能不能不写？
 
   ```java
+  /**
+  * 这是没有使用mybatis面向接口编程的时,需要写dao文件
+  */
   public class AccountDaoImpl implements AccountDao {
       
       @Override
@@ -164,13 +175,321 @@
   - 最重要的是，第二个例子生成的类因为实现了接口，可以直接调用接口的方法（方法的动态绑定机制） 
   - 第一个例子，因为没有实现接口，在编译阶段是找不到一个叫CtClassByJavassist的类的，也就不能在编译阶段直接调用方法，全程要使用反射
 
-- 那我现在如何通过这个技术去实现给定一个接口,如何给我动态生成一个对应具有crud的实现类呢?
+- 怎么去动态拼出一个方法（重点）
 
-  - 我的理解：在javasist里， 类是由接口，方法，属性组装到一起的
-  - 如果实现接口ctClass.addInterface()  ->  AccountDaoImpl implements AccountDao
+  - 实现接口ctClass.addInterface()  本质上是  AccountDaoImpl implements AccountDao
 
-  - 如果把接口里的方法都实现
-    - 这样就可以生成一个对应具有crud的实现类了, 但是思考几个问题
-    - 我是要给定一个dao接口, 如何帮我自动生成具有crud功能的dao实现类
-  - 如何去把接口的方法都实现才是最难的 -> 拼串
-  - TODO
+  - 为什么不能自己引入一个接口，而必须使用javasist制造接口？
+
+    - 一是javasist没有这个api
+    - 二是javasist已经规定好了必须制造接口这一步，因为制造接口的目的就是为了去实现 `XxxDaoImpl implemets XxxDao`, 自己引入还得去封装javasist的CtInterface对象.
+
+  - ```java
+    @Override
+        public Account selectByActno(String Actno) {
+            //使用mybatis
+            SqlSession sqlSession = SqlSessionUtil.openSession();
+            //执行sql语句
+            Account act = sqlSession.selectOne("AccountMapper.selectByActno", Actno);
+            return act;
+        }
+    
+        @Override
+        public int updateByActno(Account act) {
+            //使用mybatis
+            SqlSession sqlSession = SqlSessionUtil.openSession();
+            //执行sql
+            int count = sqlSession.update("updateByActno", act);
+            return count;
+        }
+    ```
+
+  - 为什么要传入接口的字节码对象?
+
+    - 因为你拼串需要拼 方法的返回类型
+    - 拼 方法的名字
+    - 拼 参数列表
+
+  - 我怎么知道调用sqlSession的update还是selectOne还是selectList还是insert?
+
+    - `SqlCommandType sqlCommandType = sqlSession.getConfiguration().getMappedStatement(sqlId).getSqlCommandType();`
+    - 所以需要sqlSession对象
+
+  - 我怎么知道该拼什么的sqlId?
+
+    - sql语句的id是框架的使用者提供的, 具有多变性, 对于我框架的开发人员来说. 我不知道
+    - 既然我框架开发者不知道sqlId, 怎么办呢? mybatis框架的开发者于是出台一个规定: 凡是使用次框架机制的
+    - sqlId都不能随便写. namespace必须是dao接口的全限定名称.id必须是dao接口中的方法名
+
+- 给定一个dao接口, 自动生成具有crud功能的dao实现类的部分实现源码
+
+  ```java
+  public class GenerateDaoProxy {
+      public static Object generate(SqlSession sqlSession, Class<?> daoInterface) {
+  // 获取类池
+  ClassPool pool = ClassPool.getDefault();
+  //制造类(com.powernode.bank.dao.AccountDao --> com.powernode.bank.dao.AccountDaoProxy)
+  CtClass ctClass = pool.makeClass(daoInterface.getName() + "Proxy");
+  //制造接口
+  CtClass ctInterface = pool.makeInterface(daoInterface.getName());
+  //实现接口
+  ctClass.addInterface(ctInterface);
+  //制造方法-1实现接口中所有的方法
+  Method[] methods = daoInterface.getDeclaredMethods();
+  Arrays.stream(methods).forEach(method -> {
+      //method是接口中的抽象方法
+      // 将method这个抽象方法进行实现
+      try {
+          // Account selectByActno(String actno);
+          // public Account selectByActno(String actno){代码;}
+          StringBuilder methodCode = new StringBuilder();
+          methodCode.append("public ");
+          methodCode.append(method.getReturnType().getName());
+          methodCode.append(" ");
+          methodCode.append(method.getName());
+          methodCode.append("(");
+          // 拼参数列表
+          Class<?>[] parameterTypes = method.getParameterTypes();
+          for (int i = 0; i < parameterTypes.length; i++) {
+              Class<?> parameterType = parameterTypes[i];
+              methodCode.append(parameterType.getName());
+              methodCode.append(" ");
+              methodCode.append("arg" + i);
+              if (i != parameterTypes.length - 1) {
+                  methodCode.append(",");
+              }
+          }
+          methodCode.append(")");
+          methodCode.append("{");
+          // 拼方法体代码
+          methodCode.append("org.apache.ibatis.session.SqlSession sqlSession = bank.utils.SqlSessionUtil.openSession();");
+          //  需要中的是什么类型的sql语句
+          //  sql语句的id是框架的使用者提供的, 具有多变性, 对于我框架的开发人员来说. 我不知道
+          //  既然我框架开发者不知道sqlId, 怎么办呢? mybatis框架的开发者于是出台一个规定: 凡是使用次框架机制的
+          //  sqlId都不能随便写. namespace必须是dao接口的全限定名称.id必须是dao接口中的方法名
+          String sqlId = daoInterface.getName() + "." + method.getName();
+          SqlCommandType sqlCommandType = sqlSession.getConfiguration().getMappedStatement(sqlId).getSqlCommandType();
+          if (sqlCommandType == SqlCommandType.INSERT) {
+  
+          }
+          if (sqlCommandType == SqlCommandType.DELETE) {
+  
+          }
+          if (sqlCommandType == SqlCommandType.UPDATE) {
+              methodCode.append("return sqlSession.update(\"" + sqlId + "\", arg0);");
+          }
+          if (sqlCommandType == SqlCommandType.SELECT) {
+              String returnType = method.getReturnType().getName();
+              methodCode.append("return (" + returnType + ") sqlSession.selectOne(\"" + sqlId + "\", arg0);");
+          }
+          methodCode.append("}");
+          //制造方法-2
+          String methodCode_Str = methodCode.toString();
+          CtMethod ctMethod = CtMethod.make(methodCode_Str, ctClass);
+          //将方法添加到类中
+          ctClass.addMethod(ctMethod);
+          } catch (Exception e) {
+              throw new RuntimeException(e);
+          }
+      });
+      //在内存中生成类, 同时将生成的类加载到JVM中
+      Object obj = null;
+      try {
+          Class<?> clazz = ctClass.toClass();
+          obj = clazz.newInstance();
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return obj;
+      }
+  }
+  ```
+
+- 以上就是mybatis自动实现dao实现类的基本逻辑
+- 此后,编写mybatis的步骤变成
+  - 编写XxxMapper接口和编写XxxMapper.xml, 不再写dao实现类
+    - 接口和文件有明确的规定: 
+      - xml的namespace必须是接口的全限定接口名 
+      - xml的sqlId必须是接口的方法名
+  - 使用sqlSession.getMapper(Class<?> daoInterface) 获取dao实现类
+    - 使用接口的方法, 来调用sql语句,并且接收mysql处理结果
+
+# Mybatis小技巧
+
+# Mybatis参数处理
+
+- 接下来讲的参数处理是什么意思?
+
+  - 我们目前的编写sql语句是面向接口开发, 当我们调用接口的方法(动态绑定到实现类中的方法)时, 通过参数传给方法 --> sqlSession.insert("sqlId",  obj) --> insert into t_car values(null, #{carNum},#{brand},#{guidePrice},#{produceTime},#{carType})  `然后mybatis解析这条sql, #{carNum}解析成? 并且自动ps.set(1,obj.getCarNum())`以此类推
+  - 也即是说, mybatis应对不同的obj, 是如何解析出需要的数据的
+
+- 传一个简单类型参数
+
+  - 例子(简单类型是都可以被mybatis的自动类型推断机制推断的)
+
+    - 单个参数Long类型
+
+      ```xml
+      <!--
+      parameterType属性的作用:
+      高数mybatis,我在这个方法的参数类型是什么
+      mybatis框架自带类型自动推断机制,所以大部分情况下可以不写这个属性
+      
+      Sql语句最终是这样的:
+      select * from t_student where id = ?
+      
+      JDBC代码是一定要给?传值.
+      怎么传值? ps.setXxx(第几个问好, 传什么值)
+          ps.setString(1,"1");
+          ps.setInt(1,1);
+      
+      mybatis实际上对java基本类型都内置了别名,参考开发手册
+      -->
+      <select id="selectById" resultType="Student" parameterType="java.lang.Long">
+          select *
+          from t_student
+          where id = #{id};
+      </select>
+      ```
+
+      ```xml
+      <!--
+      #{name, javaType=String, jdbcType=VARCHAR}同样是告诉mybatis参数的类型,不需要自动类型推断
+      -->
+      <select id="selectByName" resultType="Student">
+          select *
+          from t_student
+          where `name` = #{name, javaType=String, jdbcType=VARCHAR};
+      </select>
+      ```
+
+    - 单个参数Date类型
+
+    - Map集合
+
+    - Pojo类
+
+  - 单个简单类型的#{xx}xx可以随便写
+
+  - Map集合和Pojo类的#{}里面不能随便写, 要么是key名,要么是属性名
+
+- 传入多参数
+
+  - ```java
+    /**
+     * 多参数
+     * 根据name和sex查询student信息
+     * 如果是多个参数的话,mybatis框架底层是怎么做的呢?
+     * mybatis框架会自动创建一个Map集合. 并且Map集合是以这种方式存储参数的
+     *     map.put("arg0", name);
+     *     map.put("arg1", sex);
+     *     map.put("param1", name);
+     *     map.put("param2", sex);
+     * @param name
+     * @param sex
+     * @return
+     */
+    List<Student> selectByNameAndSex(String name, Character sex);
+    ```
+
+  - mybatis底层自动创建map后, 原来的#{name}和#{sex} 就失效了
+
+    - 就必须使用以上的key名
+
+  - @Param注解改进key名, 增加可读性
+
+    - ```java
+      /**
+       * 使用注解代替多参数中的arg0param1等等
+       * 注解中value属性可以省略
+       *
+       * mybatis框架底层的实现原理:
+       *      map.put("arg0",name);
+       *      map.put("arg1",sex);
+       *      arg0 arg1会被替换, param1 param2不会被替换任然存在
+       *      map.put("name",name);
+       *      map.put("sex",sex);
+       * @param name
+       * @param sex
+       * @return
+       */
+      List<Student> selectByNameAndSex2(@Param(value="name")String name,@Param("sex") Character sex);
+      ```
+
+    - 
+
+- mybatis是如何拿到参数,传给sql语句的?
+  - 传入一个简单数据类型数据
+  - 传入一个pojo对象
+  - 传入一个map对象
+
+# 查询专题
+
+- 梳理之前的
+
+  - 返回一个Car
+  - 返回多个Car
+  - 返回但用List<Car>接收一个Car
+
+- 当查询的数据没有合适的pojo接收时
+
+  - 返回一个Map
+  - 返回多个Map  `List<Map<String, Object>>`
+  - 返回大Map(解决多个Map不好查找的问题)  `Map<Long, Map<String,Object>>`
+    - 需要在接口的那个方法上使用注解  `@MapKey("id")//将查询结果的id值作为整个大Map集合的key`
+    - resultType="java.lang.Map", 因为里面还是封装的是Map
+
+- 解决pojo属性名与数据库表列名不一致导致的查询问题
+
+  - 一是使用别名
+
+  - 二是使用resultMap标签
+
+    - ```xml
+      <!--
+      1. 专门定义一个结果映射,在这个结果映射当中指定数据库表的字段名和java类的属性名的对应关系
+      2. type属性: 用来指定Pojo类的类名
+      3. id属性: 指定resultMap的唯一标识.这个id将来要在select标签中使用
+      -->
+      <resultMap id="carResultMap" type="pojo.Car">
+          <!--如果数据库表中有主键，一般都是有主键，要不然不符合数据库设计第一范式。-->
+          <!--如果有主键，建议这里配置一个1d标签，注音，这不是必须的，但是官方的解释是什么呢， 这样的配蛋可以让myhati提高效率-->
+          <id property="id" column="id"/>
+          <!--property后面写POJO类的属性名-->
+          <!--column后面填写数据库表中的字段名-->
+          <result property="carNum" column="car_num" javaType="string" jdbcType="VARCHAR"/>
+          <!--如果column和property一样可以不配置-->
+          <!--<result property="brand" column="brand"/>-->
+          <result property="guidePrice" column="guide_price"/>
+          <result property="produceTime" column="produce_time" javaType="string" jdbcType="CHAR"/>
+          <result property="carType" column="car_type" javaType="string" jdbcType="VARCHAR"/>
+      </resultMap>
+      
+      <!--select标签的resultMap属性, 用来指定使用哪个结果映射.resultMap后面的值是resultMap的id-->
+      <select id="selectAllByResultMap" resultMap="carResultMap">
+          select * from t_car;
+      </select>
+      ```
+
+  - 三是开启驼峰命名自动映射 (配置settings)
+
+    - 前提是遵守两个规范:
+
+      - Java命名规范：⾸字⺟⼩写，后⾯每个单词⾸字⺟⼤写，遵循驼峰命名⽅式。
+      - SQL命名规范：全部⼩写，单词之间采⽤下划线分割。
+
+    - 在mybatis-config核心配置文件中, 写
+
+      - ```xml
+        <!--放在properties标签后⾯-->
+        <settings>
+         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        </settings>
+        ```
+
+        
+
+
+
+​	
+
