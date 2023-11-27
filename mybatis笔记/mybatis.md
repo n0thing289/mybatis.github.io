@@ -321,7 +321,7 @@
 - 接下来讲的参数处理是什么意思?
 
   - 我们目前的编写sql语句是面向接口开发, 当我们调用接口的方法(动态绑定到实现类中的方法)时, 通过参数传给方法 --> sqlSession.insert("sqlId",  obj) --> insert into t_car values(null, #{carNum},#{brand},#{guidePrice},#{produceTime},#{carType})  `然后mybatis解析这条sql, #{carNum}解析成? 并且自动ps.set(1,obj.getCarNum())`以此类推
-  - 也即是说, mybatis应对不同的obj, 是如何解析出需要的数据的
+  - 也即是说, mybatis应对不同的obj, 解析出需要的数据的
 
 - 传一个简单类型参数
 
@@ -487,7 +487,57 @@
         </settings>
         ```
 
-        
+# 动态Sql
+
+- 动态SQL就是 拼接sql语句
+- 动态sql的使用场景：
+  -  
+
+- if标签
+  - 需求：根据品牌，知道价格，汽车类型
+  - 
+- where标签
+  - 作用：让where子句更加智能。
+    - 所有条件为空时，where标签保证不会生成where字句
+    - 自动去除某些条件前面多余的and或or（要在前面的）
+
+- trim标签
+  - 作用：智能添加内容前后缀，删除前后缀
+    - 判断内容有无在加前缀
+- set标签
+  - 需求：比如只更新提交的不为空。。。
+  - 作用：
+
+
+- choose when otherwise
+
+  - 需求
+  - 作用
+  - 三个标签通常一起使用，等效于 if-else if-else
+
+- foreach
+
+  - 批量删除
+  - 批量插入
+  - 批量删除的第二种方式
+
+- sql标签和include标签
+
+  - 把需要需用的用sql包裹
+
+    - ```xml
+      <sql id="sql1">
+      	需要需用的sql语句片段...
+      </sql>
+      ```
+
+  - 用include放到其他语句中
+
+    - ```xml
+      <include refid="sql1" />
+      ```
+
+- 
 
 
 

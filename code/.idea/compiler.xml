@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="review-mybatis-002-crud" />
+        <module name="mybatis-009-dynamic-sql" />
         <module name="review-mybatis" />
         <module name="mybatis-007-param" />
         <module name="mybatis-001-introduction" />
@@ -33,6 +34,7 @@
       <module name="mybatis-007-param" target="8" />
       <module name="mybatis-007-select" target="8" />
       <module name="mybatis-008-select" target="8" />
+      <module name="mybatis-009-dynamic-sql" target="8" />
       <module name="review-mybatis" target="1.5" />
       <module name="review-mybatis-001-introduction" target="1.5" />
       <module name="review-mybatis-002-crud" target="8" />
