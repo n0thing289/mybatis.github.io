@@ -4,22 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.MyClassMapper">
-
-    <!--一对多:分布查询第一步; 根据班级的cid获取班级信息-->
-    <resultMap id="selectByStep1ResultMap" type="MyClass">
-        <id property="cid" column="cid"/>
-        <result property="cname" column="cname"/>
-        <collection property="myStudents" select="sqlId" column="cid" fetchType="lazy">
-            <id property="sid" column="sid"/>
-            <result property="sname" column="sname"/>
-            <result/>
-        </collection>
-    </resultMap>
-    <select id="selectByStep1" resultMap="selectByStep1ResultMap">
-        select cid, cname from t_class where cid = #{cid}
-    </select>
-
-    <!--一对多:-->
     <resultMap id="selectByCollectionResultMap" type="MyClass">
         <id property="cid" column="cid"/>
         <result property="cname" column="cname"/>
@@ -37,8 +21,7 @@
 
     </select>
 
-
-    <!--多对一:分布查询第二步,根据cid获取班级信息-->
+    <!--根据cid获取班级信息-->
     <resultMap id="MyClassResultMap" type="MyClass">
         <id property="cid" column="cid"/>
         <result property="cname" column="cname"/>

@@ -3,6 +3,7 @@ package pojo;
 /**
  * 学生信息
  * 如果要构建多对一映射关系, MyStudent是属于多的一方, 多对一多在前面,所以多是主表
+ *
  */
 public class MyStudent {
     private Integer sid;

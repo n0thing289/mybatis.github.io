@@ -23,7 +23,6 @@
     -->
     <!--两条sql语句,完成多对一的分布查询-->
     <!--这里是第一步: 根据学生的id查询学生的所有信息。这些信息当中含有班级id (cid)-->
-    <!--多对一:-->
     <resultMap id="selectByIdStep1ResultMap" type="MyStudent">
         <id property="sid" column="sid"/>
         <result property="sname" column="sname"/>
