@@ -9,17 +9,16 @@
     <resultMap id="selectByStep1ResultMap" type="MyClass">
         <id property="cid" column="cid"/>
         <result property="cname" column="cname"/>
-        <collection property="myStudents" select="sqlId" column="cid" fetchType="lazy">
-            <id property="sid" column="sid"/>
-            <result property="sname" column="sname"/>
-            <result/>
-        </collection>
+        <collection property="myStudents"
+                    select="mapper.MyStudentMapper.selectByCidStep2"
+                    column="cid"
+                    fetchType="lazy"/>
     </resultMap>
     <select id="selectByStep1" resultMap="selectByStep1ResultMap">
         select cid, cname from t_class where cid = #{cid}
     </select>
 
-    <!--一对多:-->
+    <!--一对多:collection方式-->
     <resultMap id="selectByCollectionResultMap" type="MyClass">
         <id property="cid" column="cid"/>
         <result property="cname" column="cname"/>

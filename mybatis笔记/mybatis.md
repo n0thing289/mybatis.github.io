@@ -539,30 +539,128 @@
 
 # 高级映射
 
-- 普通映射: 对单表crud
+- 之前学习的都是普通映射: 对单表crud
+
 - 多对一,一对多
+
 - 环境搭建
   - 建表
   - 加依赖
   - 准备一些配置文件, 工具类
   - 编写pojo,mapper接口, mapper映射文件
-- 多对一映射实体类关系怎么设计(两张表怎么映射一个对象)
 
->![](./document/005-多对一的理解.png)
->
->- 明确主对象副对象,主表和副表	
->- 以MyStudent对象作为主对象, 有一个属性是MyClass
+- 多对一映射实体类关系怎么设计(两张表怎么映射一个对象)
+  >![](./document/005-多对一的理解.png)
+  >
+  >- 明确主对象副对象,主表和副表	
+  >- 以MyStudent对象作为主对象, 有一个属性是MyClass
 
 - 多对一映射的三种实现方式
   - 第一种方式：一条Sql语句，级联属性映射
+
   - 第二种方式：一条SQL语句，association
+
   - 第三种方式：两条SQL语句，分布查询。(常用; 优点可复用和支持懒加载)
-    - 可复用: 两表可以各自单独使用,也可以联合使用
-    - 延迟加载: 笛卡尔积(匹配次数 3 * 4 = 12次)
+    - 在内存设计上, 
+    
+    - 一个班级有多个学生, 所以班级是一,学生是多;
+    
+      如果选择多对一的映射方式, 多在一前面,所以学生是主表,班级是副表
+    
+    - MyStudentMapper.xml
+    
+      ```xml
+      <!--两条sql语句,完成多对一的分布查询-->
+      <!--这里是第一步: 根据学生的id查询学生的所有信息。这些信息当中含有班级id (cid)-->
+      <!--多对一:-->
+      <resultMap id="selectByIdStep1ResultMap" type="MyStudent">
+          <id property="sid" column="sid"/>
+          <result property="sname" column="sname"/>
+          <!--
+          property是pojo类的属性
+          select是指定另外第二部sql语句的sqlid
+          column是第一步sql查出来的列名 作为参数传给第二步sql
+          -->
+          <association property="myClass"
+               select="mapper.MyClassMapper.selectByIdStep2"
+               column="cciidd"
+               fetchType="eager"/>
+      </resultMap>
+      <select id="selectByIdStep1"
+              resultMap="selectByIdStep1ResultMap">
+          select sid, sname, cid as cciidd
+          from t_stu
+          where sid = #{sid}
+      </select>
+      ```
+    
+    - MyClassMapper.xml
+    
+      ```xml
+      <!--多对一:分布查询第二步,根据cid获取班级信息-->
+      <!--这里其实不需要resultMap可以直接使用resultType="MyClass"-->
+      <resultMap id="MyClassResultMap" type="MyClass">
+          <id property="cid" column="cid"/>
+          <result property="cname" column="cname"/>
+      </resultMap>
+      <select id="selectByIdStep2" resultMap="MyClassResultMap">
+          select cid, cname
+          from t_class
+          where cid = #{cid};
+      </select>
+      ```
+    
+    - 要把sql语句查询的结果映射成一个对象,作为主表的属性`使用assocaition标签`
+    
+      ```xml
+      <!--
+      property是要把结果映射成主表pojo类的属性
+      select是指定另外第二部sql语句的sqlid
+      column是第一步sql查出来的列名 作为参数传给第二步sql
+      -->
+      <association property="myClass"
+               	 select="mapper.MyClassMapper.selectByIdStep2"
+               	 column="cciidd"
+               	 fetchType="eager"/>
+      ```
+
 - 一对多映射实体类关系怎么设计
+  >![](./document/006一对多关系映射原理.png)
+  >
 
->![](./document/006一对多关系映射原理.png)
->
->
+- 一对多映射的三种实现方式
 
-- [ ] 做一遍高级映射
+  - 第一种方式：collection
+  - 第二种方式：两条sql语句分步查询
+
+------
+
+# 缓存
+
+![](./document/007-对缓存的理解.png)
+
+- 缓存范围
+  - 一级缓存
+  - 二级缓存
+- 一级缓存使用
+- 一级缓存失效
+  - 
+- 二级缓存使用条件
+  - 默认二级缓存开启
+  - 只需要在对应的mapper.xml使用`<cache/>`标签
+  - 使用二级缓存的pojo类必须实现可序列化接口
+  - sqlSession对象关闭才会把一级缓存放到二级缓存
+- 继承Ehcache
+  - 是为了代替mybatis自带的二级缓存，一级缓存是不能代替的
+
+
+
+
+# 逆向工程
+
+- 简单，只需要用别人的组件
+- 根据表动态生成pojo mapper mapper.xml
+
+- 环境搭建
+- 使用步骤
+  - 配依赖

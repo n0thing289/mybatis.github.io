@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.MyStudentMapper">
+
+    <!--一对多:分布查询第二步
+    正好第二步select那里，传了一个column，只有一个参数
+    然后把select查出来的学生集合赋给clazz的stu
+    这样collection里面的property，select，column就好理解了-->
+    <select id="selectByCidStep2" resultType="MyStudent">
+        select sid,sname,cid from t_stu where cid = #{cid};
+    </select>
+
     <!--
         分步查询的优点:
             第一: 复用性增强。可以重复利用。(大步拆成N多个小碎步。每一个小碎步更加可以重复利用。)
@@ -23,6 +32,7 @@
     -->
     <!--两条sql语句,完成多对一的分布查询-->
     <!--这里是第一步: 根据学生的id查询学生的所有信息。这些信息当中含有班级id (cid)-->
+    <!--多对一:-->
     <resultMap id="selectByIdStep1ResultMap" type="MyStudent">
         <id property="sid" column="sid"/>
         <result property="sname" column="sname"/>

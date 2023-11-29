@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.CarMapper">
+<!--    <cache/>-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <select id="selectById2" resultType="Car">
+        select * from t_car where id = #{id}
+    </select>
+
+    <insert id="insertMyClass">
+        insert into t_Class values(#{cid}, #{cname});
+    </insert>
+
+    <select id="selectById" resultType="Car">
+        select * from t_car where id = #{id};
+    </select>
+</mapper>

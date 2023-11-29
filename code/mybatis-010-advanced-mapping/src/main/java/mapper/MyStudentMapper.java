@@ -2,7 +2,16 @@ package mapper;
 
 import pojo.MyStudent;
 
+import java.util.List;
+
 public interface MyStudentMapper {
+    /**
+     * 一对多:分布查询第二步,根据班级编号查询学生信息
+     * @param cid
+     * @return
+     */
+    List<MyStudent> selectByCidStep2(Integer cid);
+
     /**
      * 多对一:分布查询第一步:先根据学生的sid查询
      * @param sid

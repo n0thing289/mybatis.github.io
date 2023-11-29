@@ -16,7 +16,9 @@
         <module name="junit-test" />
         <module name="mybatis-006-antic" />
         <module name="javaassist-test" />
+        <module name="mybatis-012-generator1" />
         <module name="mybatis-004-web" />
+        <module name="mybatis-011-cache" />
         <module name="review-mybatis-001-introduction" />
         <module name="mybatis-008-select" />
         <module name="mybatis-005-crud2" />
@@ -37,6 +39,8 @@
       <module name="mybatis-008-select" target="8" />
       <module name="mybatis-009-dynamic-sql" target="8" />
       <module name="mybatis-010-advanced-mapping" target="8" />
+      <module name="mybatis-011-cache" target="8" />
+      <module name="mybatis-012-generator1" target="8" />
       <module name="review-mybatis" target="1.5" />
       <module name="review-mybatis-001-introduction" target="1.5" />
       <module name="review-mybatis-002-crud" target="8" />
