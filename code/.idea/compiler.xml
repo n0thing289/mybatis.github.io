@@ -6,15 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mybatis-014-page" />
         <module name="review-mybatis-002-crud" />
         <module name="mybatis-009-dynamic-sql" />
         <module name="review-mybatis" />
         <module name="mybatis-007-param" />
         <module name="mybatis-001-introduction" />
+        <module name="mybatis-013-generator2" />
         <module name="mybatis-010-advanced-mapping" />
         <module name="mybatis-003-configuration" />
         <module name="junit-test" />
         <module name="mybatis-006-antic" />
+        <module name="mybatis-015-annotation" />
         <module name="javaassist-test" />
         <module name="mybatis-012-generator1" />
         <module name="mybatis-004-web" />
@@ -41,6 +44,9 @@
       <module name="mybatis-010-advanced-mapping" target="8" />
       <module name="mybatis-011-cache" target="8" />
       <module name="mybatis-012-generator1" target="8" />
+      <module name="mybatis-013-generator2" target="8" />
+      <module name="mybatis-014-page" target="8" />
+      <module name="mybatis-015-annotation" target="8" />
       <module name="review-mybatis" target="1.5" />
       <module name="review-mybatis-001-introduction" target="1.5" />
       <module name="review-mybatis-002-crud" target="8" />

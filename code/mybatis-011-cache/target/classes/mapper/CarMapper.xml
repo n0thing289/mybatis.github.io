@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.CarMapper">
-
+<!--    <cache/>-->
     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 
     <select id="selectById2" resultType="Car">

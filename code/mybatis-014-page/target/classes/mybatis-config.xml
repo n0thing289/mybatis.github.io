@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="mysql.properties"/>
+
+    <settings>
+        <!--默认开启mybatis日志,logback框架(可省略)-->
+        <setting name="logImpl" value="slf4j"/>
+        <!--默认开启全局的延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--默认开启驼峰自动映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <package name="pojo"/>
+    </typeAliases>
+    <!--mybatis分页拦截器-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--使用这种方式,请务必将xml和接口放在同一目录下-->
+        <package name="mapper"/>
+    </mappers>
+</configuration>

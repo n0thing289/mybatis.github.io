@@ -16,6 +16,9 @@
       <module fileurl="file://$PROJECT_DIR$/mybatis-010-advanced-mapping/mybatis-010-advanced-mapping.iml" filepath="$PROJECT_DIR$/mybatis-010-advanced-mapping/mybatis-010-advanced-mapping.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatis-011-cache/mybatis-011-cache.iml" filepath="$PROJECT_DIR$/mybatis-011-cache/mybatis-011-cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatis-012-generator1/mybatis-012-generator1.iml" filepath="$PROJECT_DIR$/mybatis-012-generator1/mybatis-012-generator1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-013-generator2/mybatis-013-generator2.iml" filepath="$PROJECT_DIR$/mybatis-013-generator2/mybatis-013-generator2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-014-page/mybatis-014-page.iml" filepath="$PROJECT_DIR$/mybatis-014-page/mybatis-014-page.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-015-annotation/mybatis-015-annotation.iml" filepath="$PROJECT_DIR$/mybatis-015-annotation/mybatis-015-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis-001-introduction/review-mybatis-001-introduction.iml" />
       <module fileurl="file://$PROJECT_DIR$/review-mybatis/review-mybatis-002-crud/review-mybatis-002-crud.iml" filepath="$PROJECT_DIR$/review-mybatis/review-mybatis-002-crud/review-mybatis-002-crud.iml" />

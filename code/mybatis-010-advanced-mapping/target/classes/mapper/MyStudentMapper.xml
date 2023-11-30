@@ -37,7 +37,7 @@
         <id property="sid" column="sid"/>
         <result property="sname" column="sname"/>
         <!--
-            property是pojo类的属性
+            property是要把结果映射成主表pojo类的属性
             select是指定另外第二部sql语句的sqlid
             column是第一步sql查出来的列名 作为参数传给第二步sql
         -->

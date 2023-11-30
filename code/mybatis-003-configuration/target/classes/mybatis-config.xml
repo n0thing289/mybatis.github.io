@@ -5,26 +5,31 @@
 
 <configuration>
 
-    <!--java.util.Properties类. 是一个Map集合. key和value都是字符串-->
-    <!--    <properties>-->
-    <!--        &lt;!&ndash;这里去定义一些属性&ndash;&gt;-->
-    <!--        &lt;!&ndash;用的时候 在value="${jdbc.driver}"&ndash;&gt;-->
-    <!--        <property name="jdbc.driver" value="com.mysql.jdbc.Driver"/>-->
-    <!--        <property name="jdbc.url" value="jdbc:mysql://localhost:3306/powernode?rewriteBatchedStatements=true"/>-->
-    <!--        <property name="jdbc.username" value="root"/>-->
-    <!--        <property name="jdbc.password" value="hsp"/>-->
-    <!--&lt;!&ndash;但实际上可以再写一个properties文件, 导进来就好了&ndash;&gt;-->
-    <!--    </properties>-->
+    <!--java.utils.Properties类. 是一个Map集合. key和value都是字符串-->
+    <!--        <properties>-->
+    <!--            &lt;!&ndash;这里去定义一些属性&ndash;&gt;-->
+    <!--            &lt;!&ndash;用的时候 在value="${jdbc.driver}"&ndash;&gt;-->
+    <!--            <property name="jdbc.driver" value="com.mysql.jdbc.Driver"/>-->
+    <!--            <property name="jdbc.url" value="jdbc:mysql://localhost:3306/powernode?rewriteBatchedStatements=true"/>-->
+    <!--            <property name="jdbc.username" value="root"/>-->
+    <!--            <property name="jdbc.password" value="hsp"/>-->
+    <!--    &lt;!&ndash;但实际上可以再写一个properties文件, 导进来就好了&ndash;&gt;-->
+    <!--        </properties>-->
     <!--    但实际上可以再写一个properties文件, 导进来就好了-->
+    <!--    resource是从类的根路径下查找-->
     <properties resource="mysql.properties"/>
+    <!--    还有url第二种写法 file:///-->
+    <!--    <properties url="file:///xxx.properties"/>-->
 
-
+    <settings>
+        <setting name="logImpl" value="slf4j"/>
+    </settings>
     <!--    default表示默认使用的环境-->
     <!--    默认环境：当你使用mybatis创建SqlSessionFactory对象的时候，没有指定环境的话，默认使用哪个环境-->
     <environments default="powernode">
         <!-- 其中一个环境,连接的数据库是powernode-->
         <!--        一般一个数据库会对应一个SqlSessionFactory对象-->
-        <!--        一个环境environment会对应一个SqlSessionFactory对象-->
+        <!--        一个数据库对应一个环境environment，一个环境environment对应一个SqlSessionFactory对象-->
         <environment id="powernode">
             <!--
                 transactionManager标签：
@@ -65,8 +70,6 @@
                         JNDI是一套规范.谁实现了这套规范? 大部分的web容器都是实现了
                             例如:Tomcat
                         JNDI是:java命名目录接口.Tomcat服务器实现了这个规范
-
-
             -->
             <!--            <dataSource type="JNDI">-->
             <!--                &lt;!&ndash;例如tomcat实现druid的实现类路径&ndash;&gt;-->
