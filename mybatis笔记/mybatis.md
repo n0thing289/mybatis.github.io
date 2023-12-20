@@ -694,12 +694,10 @@ select * from t_car limit 0,3
 # 注解开发
 
 - 如果用注解, mapper.xml文件可以不写了; 但是官方建议简单的单表crud使用注解,复杂sql语句还是要使用xml来映射sql
-- @Insert
-- @Delete
-- @Select
-- @Update
-- @Results
-  - @Result property column
-
-- 高级映射复习
-- 准备spring的资料
+  - @Insert
+  - @Delete
+  - @Select
+  - @Update
+  - @Results
+    - @Result property column
+- 配置类代替配置文件
